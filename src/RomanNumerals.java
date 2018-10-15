@@ -1,3 +1,4 @@
+import java.util.List;
 
 class RomanNumerals {
 	/**
@@ -6,17 +7,25 @@ class RomanNumerals {
      *
      * @throws RomanNumeralsException - Thrown if the romanNum to be converted is incorrect.
 	 * @param romanNum - The String that has the roman numerals
-	 * @return
-	 * 			0 - Default
+	 * @return the romanNum as arabicNum.
 	 */
 	int convertToInteger(String romanNum) throws RomanNumeralsException {
-
 		int arabicNum = 0;
+        List<RomanNumeralEnum> romanNumerals = RomanNumeralEnum.getReverseSortedValues();
 
 		if (isStringNotNullAndNotEmpty(romanNum) && hasOnlyAcceptedCharacters(romanNum)) {
 			String preparedStr = prepareString(romanNum);
 			if (hasNoTooManyCharactersInARow(preparedStr)) {
-                arabicNum = 1;
+                int i = 0;
+                while ((preparedStr.length() > 0) && (i < romanNumerals.size())) {
+                    RomanNumeralEnum current = romanNumerals.get(i);
+                    if (preparedStr.startsWith(current.name())) {
+                        arabicNum = arabicNum + current.getValue();
+                        preparedStr = preparedStr.substring(current.name().length());
+                    } else {
+                        i++;
+                    }
+                }
             } else {
 			    throw new RomanNumeralsException();
             }
@@ -25,9 +34,7 @@ class RomanNumerals {
 		}
 
 		return arabicNum;
-		
 	}
-
 
 	/**
 	 * private boolean isStringNotNullAndNotEmpty
@@ -73,10 +80,10 @@ class RomanNumerals {
      * @return true if violations, false if no
      */
     private boolean hasQuadrupleLetterViolations(String stringToBeChecked) {
-	    return (stringToBeChecked.contains("iiii")
-                || stringToBeChecked.contains("xxxx")
-                || stringToBeChecked.contains("cccc")
-                || stringToBeChecked.contains("mmmm"));
+	    return (stringToBeChecked.contains("IIII")
+                || stringToBeChecked.contains("XXXX")
+                || stringToBeChecked.contains("CCCC")
+                || stringToBeChecked.contains("MMMM"));
     }
 
     /**
@@ -87,15 +94,15 @@ class RomanNumerals {
      * @return true if violations, false if no
      */
     private boolean hasUniqueLetterViolations(String stringToBeChecked) {
-	    return (stringToBeChecked.contains("vv")
-                || stringToBeChecked.contains("ll")
-                || stringToBeChecked.contains("dd"));
+	    return (stringToBeChecked.contains("VV")
+                || stringToBeChecked.contains("LL")
+                || stringToBeChecked.contains("DD"));
     }
 
 	/**
 	 * private String prepareString
 	 * Prepares the Roman numerals String for the operations by removing whitespace, making all
-	 * characters into lowercase etc.
+	 * characters into uppercase etc.
 	 *
 	 * @param originalString - The original String that will be converted
 	 * @return preparedString - The original String that has been prepared.
@@ -103,11 +110,10 @@ class RomanNumerals {
 	private String prepareString(String originalString) {
 		String preparedString = originalString;
 
-
 		//Remove whitespace etc.
 		preparedString =  preparedString.replaceAll("\\s", "");
-		//Make all characters into lowercase
-		preparedString = preparedString.toLowerCase();
+		//Make all characters into uppercase
+		preparedString = preparedString.toUpperCase();
 
 		return preparedString;
 	}
