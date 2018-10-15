@@ -1,11 +1,13 @@
 
-public class RomanNumerals {
+class RomanNumerals {
 	/**
 	 * public int convertToInteger
-	 * Converts the given Roman numerals String into standard Arabic numbers
+	 * Converts the given Roman numerals String into standard Arabic numbers.
+     *
+     * @throws RomanNumeralsException - Thrown if the romanNum to be converted is incorrect.
 	 * @param romanNum - The String that has the roman numerals
 	 * @return
-	 * 			-1 - Error in execution
+	 * 			0 - Default
 	 */
 	int convertToInteger(String romanNum) throws RomanNumeralsException {
 
@@ -13,9 +15,13 @@ public class RomanNumerals {
 
 		if (isStringNotNullAndNotEmpty(romanNum) && hasOnlyAcceptedCharacters(romanNum)) {
 			String preparedStr = prepareString(romanNum);
-			arabicNum = 1;
+			if (hasNoTooManyCharactersInARow(preparedStr)) {
+                arabicNum = 1;
+            } else {
+			    throw new RomanNumeralsException();
+            }
 		} else {
-			arabicNum = -1;
+			throw new RomanNumeralsException();
 		}
 
 		return arabicNum;
@@ -46,6 +52,46 @@ public class RomanNumerals {
 		return stringToBeChecked.matches(acceptedCharactersRegex);
 	}
 
+    /**
+     * private boolean hasNoTooManyCharactersInARow
+     * Checks the given String for character repeating errors.
+     * I, X, C and M may not repeat more than thrice in a row.
+     * V, L and D may not repeat in a row.
+     *
+     * @param stringToBeChecked - The String to be checked.
+     * @return true if the String had no violations, false if yes.
+     */
+	private boolean hasNoTooManyCharactersInARow(String stringToBeChecked) {
+	    return !(hasQuadrupleLetterViolations(stringToBeChecked) || hasUniqueLetterViolations(stringToBeChecked));
+    }
+
+    /**
+     * private boolean hasQuadrupleLetterViolations
+     * Checks if I, X, C or M repeat more than thrice in a row in the given String.
+     *
+     * @param stringToBeChecked - The String to be checked.
+     * @return true if violations, false if no
+     */
+    private boolean hasQuadrupleLetterViolations(String stringToBeChecked) {
+	    return (stringToBeChecked.contains("iiii")
+                || stringToBeChecked.contains("xxxx")
+                || stringToBeChecked.contains("cccc")
+                || stringToBeChecked.contains("mmmm"));
+    }
+
+    /**
+     * private boolean hasUniqueLetterViolations
+     * Checks if V, L or D repeat in a row in the given String.
+     *
+     * @param stringToBeChecked - The String to be checked.
+     * @return true if violations, false if no
+     */
+    private boolean hasUniqueLetterViolations(String stringToBeChecked) {
+	    return (stringToBeChecked.contains("vv")
+                || stringToBeChecked.contains("ll")
+                || stringToBeChecked.contains("dd"));
+    }
+
 	/**
 	 * private String prepareString
 	 * Prepares the Roman numerals String for the operations by removing whitespace, making all
@@ -57,9 +103,9 @@ public class RomanNumerals {
 	private String prepareString(String originalString) {
 		String preparedString = originalString;
 
+
 		//Remove whitespace etc.
 		preparedString =  preparedString.replaceAll("\\s", "");
-
 		//Make all characters into lowercase
 		preparedString = preparedString.toLowerCase();
 

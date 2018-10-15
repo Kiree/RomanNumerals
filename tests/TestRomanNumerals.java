@@ -12,34 +12,92 @@ public class TestRomanNumerals {
 		romanNumerals = new RomanNumerals();
 	}
 
-	@Test
+	@Test (expected = RomanNumeralsException.class)
 	public void testNullString() throws RomanNumeralsException {
 		//Arrange
 		String nullString = null;
 		//Act
 		int returnedNumber = romanNumerals.convertToInteger(nullString);
-		//Assert
-		assertEquals("Returned number should be -1.", -1, returnedNumber);
 	}
 
-	@Test
+	@Test (expected = RomanNumeralsException.class)
 	public void testEmptyString() throws RomanNumeralsException {
 		//Arrange
 		String emptyString = "";
 		//Act
 		int returnedNumber = romanNumerals.convertToInteger(emptyString);
-		//Assert
-		assertEquals("Returned number should be -1.", -1, returnedNumber);
 	}
 
-	@Test
+	@Test (expected = RomanNumeralsException.class)
 	public void testForIncorrectCharacters() throws RomanNumeralsException {
 		//Arrange
 		String incorrectCharacters = "Hello there!";
 		//Act
 		int returnedNumber = romanNumerals.convertToInteger(incorrectCharacters);
-		//Assert
-		assertEquals("Returned number should be -1.", -1, returnedNumber);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersI() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "IIII";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersX() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "XXXX";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersC() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "CCCC";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersM() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "MMMM";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersV() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "VV";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersL() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "LL";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersD() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "DD";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
+	}
+
+	@Test (expected = RomanNumeralsException.class)
+	public void testRepeatingCharactersMultiple() throws RomanNumeralsException {
+		//Arrange
+		String repeatingCharacters = "IIIVV";
+		//Act
+		int returnedNumber = romanNumerals.convertToInteger(repeatingCharacters);
 	}
 
 	@Test
