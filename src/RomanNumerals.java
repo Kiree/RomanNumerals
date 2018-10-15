@@ -4,31 +4,31 @@ class RomanNumerals {
 	/**
 	 * public int convertToInteger
 	 * Converts the given Roman numerals String into standard Arabic numbers.
-     *
-     * @throws RomanNumeralsException - Thrown if the romanNum to be converted is incorrect.
+	 *
+	 * @throws RomanNumeralsException - Thrown if the romanNum to be converted is incorrect.
 	 * @param romanNum - The String that has the roman numerals
 	 * @return the romanNum as arabicNum.
 	 */
 	int convertToInteger(String romanNum) throws RomanNumeralsException {
 		int arabicNum = 0;
-        List<RomanNumeralEnum> romanNumerals = RomanNumeralEnum.getReverseSortedValues();
+		List<RomanNumeralEnum> romanNumerals = RomanNumeralEnum.getReverseSortedValues();
 
-		if (isStringNotNullAndNotEmpty(romanNum) && hasOnlyAcceptedCharacters(romanNum)) {
+        if (isStringNotNullAndNotEmpty(romanNum) && hasOnlyAcceptedCharacters(romanNum)) {
 			String preparedStr = prepareString(romanNum);
 			if (hasNoTooManyCharactersInARow(preparedStr)) {
-                int i = 0;
+				int i = 0;
                 while ((preparedStr.length() > 0) && (i < romanNumerals.size())) {
-                    RomanNumeralEnum current = romanNumerals.get(i);
+                	RomanNumeralEnum current = romanNumerals.get(i);
                     if (preparedStr.startsWith(current.name())) {
-                        arabicNum = arabicNum + current.getValue();
+                    	arabicNum = arabicNum + current.getValue();
                         preparedStr = preparedStr.substring(current.name().length());
                     } else {
-                        i++;
+                    	i++;
                     }
                 }
             } else {
-			    throw new RomanNumeralsException();
-            }
+				throw new RomanNumeralsException();
+			}
 		} else {
 			throw new RomanNumeralsException();
 		}

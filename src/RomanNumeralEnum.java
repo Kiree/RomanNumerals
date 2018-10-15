@@ -6,8 +6,6 @@ import java.util.stream.Collectors;
 /**
  * public enum RomanNumeralEnum
  * An Enumeration class for holding the numeric values of the Roman Numerals.
- *
- *
  */
 public enum RomanNumeralEnum {
 
